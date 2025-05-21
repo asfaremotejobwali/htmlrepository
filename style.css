@@ -10,18 +10,23 @@ body {
     line-height: 1.6;
 }
 
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
 /* Header */
 header {
     background-color: #2c3e50;
     color: #ffffff;
     padding: 1.5em 1em;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Slightly softer shadow */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 header h1 {
     margin: 0;
-    font-size: 2.2em; /* Slightly larger */
+    font-size: 2.2em;
     font-family: 'Arial', sans-serif;
     font-weight: bold;
 }
@@ -29,7 +34,7 @@ header h1 {
 /* Main Content Area */
 main {
     flex-grow: 1;
-    padding: 2em 1em; /* Increased padding */
+    padding: 2em 1em;
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
@@ -38,15 +43,13 @@ main {
 
 /* Movie List Container & Styling for "No movies" message */
 #movie-list-placeholder {
-    /* Styles for when movies are present (via child UL) or when "No movies" message is shown */
-    padding: 1em 0; /* Minimal padding when list is present, more handled by UL/LI */
+    padding: 1em 0;
 }
 
 #movie-list-placeholder:empty {
-    /* Styles specifically for the "No movies to display yet" message */
-    border: 2px dashed #bdc3c7; /* Softer dashed border */
-    padding: 3em 2em; /* More padding for the message */
-    min-height: 200px; /* Ensure it's visible */
+    border: 2px dashed #bdc3c7;
+    padding: 3em 2em;
+    min-height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,60 +61,113 @@ main {
     font-size: 1.1em;
 }
 
-/* Styling for the UL that will contain movie items (moved from script.js) */
 #movie-list-placeholder ul {
     list-style-type: none;
     padding: 0;
-    margin: 0; /* Ensure no default margin */
+    margin: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted minmax */
-    gap: 1.5em; /* Increased gap */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5em;
 }
 
 /* Movie Item Card Styling */
 .movie-item {
     background-color: #ffffff;
-    border: 1px solid #e0e0e0; /* Softer border */
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
-    padding: 1.5em; /* Increased padding */
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* Slightly deeper shadow */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    display: flex; /* For better internal alignment if needed */
+    display: flex;
     flex-direction: column;
+    overflow: hidden;
+    cursor: pointer;
 }
 
 .movie-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 12px rgba(0,0,0,0.15); /* Enhanced shadow on hover */
+    box-shadow: 0 5px 12px rgba(0,0,0,0.15);
 }
 
-.movie-item h3 {
+.movie-item img { /* General image styling, applies to poster */
+    width: 100%;
+    height: auto;
+    display: block; /* Removes bottom space under image */
+    background-color: #e0e0e0; /* Background for if image is slow to load/broken */
+}
+
+.movie-item-content {
+    padding: 1.5em;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.movie-item h3 { /* Movie Title */
     color: #3498db;
     margin-top: 0;
-    margin-bottom: 0.75em; /* Added margin for spacing */
-    font-size: 1.4em; /* Slightly larger movie title */
+    margin-bottom: 0.75em;
+    font-size: 1.4em;
 }
 
-.movie-item p { /* Styling for actors paragraph */
-    margin-bottom: 0; /* Remove bottom margin if it's the last element */
-    font-size: 0.95em;
-    color: #555555; /* Slightly darker text for actors */
-    flex-grow: 1; /* Allows paragraph to take available space if card heights vary */
+/* Actor Details Section */
+.actor-details {
+    margin-top: 0.5em;
+    padding: 0.75em;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid #eeeeee;
 }
 
-.movie-item p strong { /* For "Actors: " label */
-    color: #333333;
+.actor-details h4 { /* "Cast:" heading */
+    margin-top: 0;
+    margin-bottom: 0.75em; /* Slightly increased margin for more space */
+    font-size: 1em;
+    font-weight: bold;
+    color: #333;
 }
 
+.actor-details p { /* For "Actor information not available" message */
+    margin-bottom: 0; /* Padding of parent .actor-details is sufficient */
+    font-size: 0.9em;
+    color: #555;
+    font-style: italic;
+}
+
+/* Individual Actor Entry Styling */
+.actor-entry {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Slightly increased space between actor entries */
+}
+
+.actor-entry:last-child {
+    margin-bottom: 0;
+}
+
+.actor-entry img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    background-color: #e0e0e0; /* Background for if image is slow to load/broken */
+}
+
+.actor-entry span {
+    font-size: 0.9em;
+    color: #333;
+    line-height: 1.4; /* Added for potential text wrapping */
+}
 
 /* Footer */
 footer {
     background-color: #2c3e50;
     color: #ffffff;
-    padding: 2em 1em; /* Increased padding */
+    padding: 2em 1em;
     text-align: center;
     font-size: 0.9em;
-    margin-top: 2em; /* Add some space above the footer */
+    margin-top: 2em;
 }
 
 footer p {
@@ -123,21 +179,36 @@ footer p {
     header h1 {
         font-size: 1.9em;
     }
-
     main {
         padding: 1.5em 1em;
     }
-
     #movie-list-placeholder ul {
-        gap: 1em; /* Smaller gap on tablets */
+        gap: 1em;
     }
-
-    .movie-item {
+    .movie-item-content {
         padding: 1em;
     }
-
     .movie-item h3 {
         font-size: 1.3em;
+    }
+    .actor-details {
+        padding: 0.5em;
+        margin-top: 0.5em;
+    }
+    .actor-details h4 {
+        font-size: 0.95em;
+        margin-bottom: 0.5em; /* Adjusted margin for smaller screens */
+    }
+    .actor-entry {
+        margin-bottom: 8px; /* Adjusted margin */
+    }
+    .actor-entry img {
+        width: 35px;
+        height: 35px;
+        margin-right: 8px;
+    }
+    .actor-entry span {
+        font-size: 0.85em;
     }
 }
 
@@ -145,25 +216,28 @@ footer p {
     header h1 {
         font-size: 1.6em;
     }
-
     header, footer {
         padding: 1.5em 0.5em;
     }
-    
     main {
         padding: 1em 0.5em;
     }
-
     #movie-list-placeholder ul {
         grid-template-columns: 1fr; /* Single column on very small screens */
         gap: 1em;
     }
-
     .movie-item h3 {
         font-size: 1.2em;
     }
-
-    .movie-item p {
+    .actor-details h4 {
         font-size: 0.9em;
+        margin-bottom: 0.4em; /* Adjusted margin */
+    }
+    .actor-entry img {
+        width: 30px;
+        height: 30px;
+    }
+    .actor-entry span {
+        font-size: 0.8em;
     }
 }
